@@ -1,6 +1,6 @@
 ---
 title: "Daily Case Tracker - Koosina Mane Survey"
-author: "Melvin Kunjumon, JustJobs Newtwork"
+author: "JustJobs Network"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
     html_document:
