@@ -1,0 +1,201 @@
+---
+title: "Daily Case Tracker - Koosina Mane Survey"
+author: "Melvin Kunjumon, JustJobs Newtwork"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+    html_document:
+            theme: journal
+            toc_float: TRUE
+            toc: TRUE
+            toc_depth: 2
+            fig_width: 8
+            fig_height: 5
+            fig_caption: TRUE
+            df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(error = F)
+```
+
+```{r Library}
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(gt)
+library(gtsummary)
+library(haven)
+```
+
+```{r Data Files}
+km_long <- read_sav("km_long.sav")
+# km_wide <- read_sav("km_wide.sav")
+```
+
+```{r}
+data <- km_long %>% 
+  clean_names() %>%  
+  filter(!is.na(stamp_1))
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(respondent_religion) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(respondent_caste) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(respondent_education) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(respondent_marital) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>%
+  group_by(district_respondent) %>% 
+  summarise(mean_age = round(mean(respondent_age,na.rm = T),1),
+            mean_age_marriage = round(mean(age_marriage,na.rm = T),1),
+            mean_children_count = round(mean(children_count,na.rm = T),1),
+            mean_age_first_childbirth = round(mean(age_first_childbirth,na.rm = T),1),
+            mean_age_last_childbirth = round(mean(age_last_childbirth,na.rm = T),1))
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(respondent_marital) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(weekly_status_current) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>%
+  filter(!is.na(reason_not_working_current)) %>% 
+  group_by(district_respondent) %>%
+  count(reason_not_working_current) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(employment_type_current) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(employment_sector_current) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(remuneration_type_current) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+```{r}
+data %>% 
+  group_by(district_respondent) %>% 
+  count(respondent_marital) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n*100/sum(n),1)) %>% 
+  adorn_totals()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r eval=FALSE}
+data_dur <- data %>% 
+  select(enumerator_name,difference_1,difference_2,difference_3,difference_4,difference_5,
+         difference_6,difference_7,difference_8,difference_9,difference_10)
+
+data_dur %>% group_by(enumerator_name) %>% 
+  summarise(across(where(is.numeric), ~ mean(.,na.rm = T)))
+
+```
+
